@@ -11,6 +11,7 @@
 
     <artifactId>sql-asr</artifactId>
     <version>${project.parent.version}</version>
+    <packaging>war</packaging>
 
 
 
