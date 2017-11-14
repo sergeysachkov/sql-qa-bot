@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL A&Q BOT</title>
+</head>
+<body>
+<script type="text/javascript" src="recorder.js"> </script>
+<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+<div>
+ <input onclick="startRecording()" type="button" value="ask question" />
+ <input onclick="stopRecording()" type="button" value="get response" />
+</div>
+<textarea rows="8" cols="80" id="trans" >
+</textarea>
+
+<script>
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    window.URL = window.URL || window.webkitURL;
+    var context = new AudioContext();
+    var recorder;
+    var onFail = function(e) {
+        console.log('Rejected!', e);
+    };
+
+    var onSuccess = function(s) {
+        var mediaStreamSource = context.createMediaStreamSource(s);
+        window.userSpeechAnalyser = context.createAnalyser();
+        mediaStreamSource.connect(window.userSpeechAnalyser);
+        recorder =new Recorder(mediaStreamSource, { workerPath : 'recorderWorker.js' });
+        recorder.record();
+    };
+
+    function startRecording() {
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({audio: true}, onSuccess, onFail);
+        } else {
+            console.log('navigator.getUserMedia not present');
+        }
+    }
+    var config = {};
+    config.onEvent = config.onEvent || function(e, data) {};
+
+    function stopRecording() {
+        recorder.stop();
+        config.onEvent(11, 'Stopped recording');
+        recorder.export16kMono(function(blob) {
+                $.ajax({
+                    type: "POST",
+                    url: "/rest/sql/ask",
+                    data: blob,
+                    processData: false,
+                    contentType: 'multipart/form-data'
+                }).done(function( data ) {
+                    recorder.clear();
+                    $("#trans").val(data);
+                    console.log(data);
+                });
+        }, 'audio/x-raw');
+    }
+</script>
+</body>
+</html>
