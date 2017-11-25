@@ -8,8 +8,9 @@
 <script type="text/javascript" src="recorder.js"> </script>
 <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
 <div>
- <input onclick="startRecording()" type="button" value="ask question" />
- <input onclick="stopRecording()" type="button" value="get response" />
+ <audio controls autoplay></audio>
+ <input id="start" onclick="startRecording()" type="button" value="ask question" />
+ <input id="stop" onclick="stopRecording()" type="button" value="get response" />
 </div>
 <textarea rows="8" cols="80" id="trans" >
 </textarea>
@@ -25,14 +26,17 @@
     };
 
     var onSuccess = function(s) {
+        context = new AudioContext();
         var mediaStreamSource = context.createMediaStreamSource(s);
         window.userSpeechAnalyser = context.createAnalyser();
         mediaStreamSource.connect(window.userSpeechAnalyser);
-        recorder =new Recorder(mediaStreamSource, { workerPath : 'recorderWorker.js' });
+        recorder = new Recorder(mediaStreamSource, { workerPath : 'recorderWorker.js' });
         recorder.record();
     };
 
     function startRecording() {
+        document.getElementById('start').disabled = true;
+        document.getElementById('stop').disabled = false;
         if (navigator.getUserMedia) {
             navigator.getUserMedia({audio: true}, onSuccess, onFail);
         } else {
@@ -43,6 +47,8 @@
     config.onEvent = config.onEvent || function(e, data) {};
 
     function stopRecording() {
+        document.getElementById('start').disabled = false;
+        document.getElementById('stop').disabled = true;
         recorder.stop();
         config.onEvent(11, 'Stopped recording');
         recorder.export16kMono(function(blob) {
@@ -58,6 +64,7 @@
                     console.log(data);
                 });
         }, 'audio/x-raw');
+        context.close();
     }
 </script>
 </body>
