@@ -1,0 +1,16 @@
+Connecting to the Database
+With JDBC, a database is represented by a URL (Uniform Resource Locator). With PostgreSQL, this takes one of the following forms:
+jdbc:postgresql:database
+jdbc:postgresql:/
+jdbc:postgresql://host/database
+jdbc:postgresql://host/
+jdbc:postgresql://host:port/database
+jdbc:postgresql://host:port/
+The parameters have the following meanings:
+host
+The host name of the server. Defaults to localhost. To specify an IPv6 address your must enclose the host parameter with square brackets, for example:
+jdbc:postgresql://[::1]:5740/accounting
+port
+The port number the server is listening on. Defaults to the PostgreSQL™ standard port number (5432).
+database
+The database name. The default is to connect to a database with the same name as the user name.

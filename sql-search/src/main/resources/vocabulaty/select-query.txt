@@ -1,0 +1,3 @@
+select query
+A simple kind of query has the form:
+SELECT * FROM table1;
