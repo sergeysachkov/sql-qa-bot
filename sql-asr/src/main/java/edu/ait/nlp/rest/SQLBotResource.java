@@ -1,8 +1,6 @@
 package edu.ait.nlp.rest;
 
-import edu.ait.nlp.services.KaldiService;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
+import edu.ait.nlp.services.KaldiServiceImpl;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,7 +14,7 @@ import java.net.URISyntaxException;
 @Path("/sql")
 public class SQLBotResource {
 
-    private KaldiService kaldiService = new KaldiService();
+    private KaldiServiceImpl kaldiService = new KaldiServiceImpl();
     @POST
     @Path("/ask")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
