@@ -1,5 +1,4 @@
-Connecting to the Database
-With JDBC, a database is represented by a URL (Uniform Resource Locator). With PostgreSQL, this takes one of the following forms:
+to connecting to the database use syntax like following lines
 jdbc:postgresql:database
 jdbc:postgresql:/
 jdbc:postgresql://host/database

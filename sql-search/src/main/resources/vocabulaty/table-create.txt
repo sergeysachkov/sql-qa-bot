@@ -1,5 +1,4 @@
-Creating a New Table
-You can create a new table by specifying the table name, along with all column names and their types:
+to create a new table use following expression
 CREATE TABLE weather (
     city            varchar(80),
     temp_lo         int,           -- low temperature
@@ -7,4 +6,3 @@ CREATE TABLE weather (
     prcp            real,          -- precipitation
     date            date
 );
-You can enter this into psql with the line breaks. psql will recognize that the command is not terminated until the semicolon.

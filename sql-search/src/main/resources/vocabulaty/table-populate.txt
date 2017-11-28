@@ -1,4 +1,1 @@
-Populating a Table With Rows
-The INSERT statement is used to populate a table with rows:
-INSERT INTO weather VALUES ('San Francisco', 46, 50, 0.25, '1994-11-27');
-Note that all data types use rather obvious input formats. Constants that are not simple numeric values usually must be surrounded by single quotes ('), as in the example. The date type is actually quite flexible in what it accepts, but for this tutorial we will stick to the unambiguous format shown here.
+to insert record into table use following expression INSERT INTO weather VALUES ('San Francisco', 46, 50, 0.25, '1994-11-27');
