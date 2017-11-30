@@ -25,5 +25,6 @@
         <module>sql-nlp</module>
         <module>sql-search</module>
         <module>sql-response</module>
+        <module>kaldi-docker</module>
     </modules>
 </project>
