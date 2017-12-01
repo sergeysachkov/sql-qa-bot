@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-ONBUILD RUN apt-get update && apt-get install -y  \
+RUN apt-get update && apt-get install -y  --allow-unauthenticated \
                 autoconf \
                 automake \
                 bzip2 \
@@ -17,6 +17,7 @@ ONBUILD RUN apt-get update && apt-get install -y  \
                 libtool-bin \
                 make \
                 python2.7 \
+                python3 \
                 python-pip \
                 python-yaml \
                 python-simplejson \
@@ -28,7 +29,8 @@ ONBUILD RUN apt-get update && apt-get install -y  \
                 apt-get autoremove -y && \
                 pip install ws4py==0.3.2 && \
                 pip install tornado && \
-                ln -s /usr/bin/python2.7 /usr/bin/python ; ln -s -f bash /bin/sh
+                ln -s /usr/bin/python2.7 /usr/bin/python && \
+                ln -s -f bash /bin/sh
 
 ENV GST_PLUGIN_PATH=/opt/kaldi/src/gst-plugin
 WORKDIR /opt
