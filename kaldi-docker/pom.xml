@@ -11,5 +11,30 @@
 
     <artifactId>kaldi-docker</artifactId>
 
+    <properties>
+        <docker.repo>docker.ait.edu/proj_enm</docker.repo>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <useConfigFile>true</useConfigFile>
+                    <imageName>${docker.repo}/${project.artifactId}:${project.version}</imageName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
