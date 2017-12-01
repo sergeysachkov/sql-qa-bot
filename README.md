@@ -11,5 +11,5 @@ deploy app to tomcat and access it at localhost:8080
 
 [Kaldi](http://kaldi-asr.org/)
 
-[aldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server)
+[kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server)
 
