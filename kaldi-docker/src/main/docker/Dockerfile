@@ -33,6 +33,8 @@ RUN apt-get update && apt-get install -y  --allow-unauthenticated \
                 ln -s -f bash /bin/sh
 
 ENV GST_PLUGIN_PATH=/opt/kaldi/src/gst-plugin
+
+
 WORKDIR /opt
 
 RUN git clone https://github.com/kaldi-asr/kaldi && \
@@ -43,9 +45,14 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     make depend && make && \
     cd /opt/kaldi/src/online && make depend && make && \
     cd /opt/kaldi/src/gst-plugin && make depend && make && \
-    cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server.git && \
+    cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server && \
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
-    rm -rf /opt/kaldi-gstreamer-server/test/ && \
-    cd /opt/kaldi-gstreamer-server && \
-    python kaldigstserver/master_server.py --port=8888  && \
-    python kaldigstserver/worker.py -u ws://localhost:8888/worker/ws/speech -c sample_worker.yaml
+    rm -rf /opt/kaldi-gstreamer-server/test/
+
+ADD start_kaldi.sh /opt/
+ADD stop_kaldi.sh /opt/
+
+RUN chmod +x /opt/start_kaldi.sh && \
+    chmod +x /opt/stop_kaldi.sh
+
+EXPOSE 8888

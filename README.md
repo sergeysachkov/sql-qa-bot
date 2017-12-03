@@ -13,3 +13,8 @@ deploy app to tomcat and access it at localhost:8080
 
 [kaldi-gstreamer-server](https://github.com/alumae/kaldi-gstreamer-server)
 
+[Dockerfile for kaldi-gstreamer-server](https://github.com/jcsilva/docker-kaldi-gstreamer-server)
+
+[Lucene](https://lucene.apache.org)
+
+[Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/)
