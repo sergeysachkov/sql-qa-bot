@@ -20,7 +20,7 @@ public class KaldiServiceImpl implements AudioRecognitionService {
         final KaldiResponse response = new KaldiResponse();
         try {
             clientEndPoint = new KaldiWebSocketClient(
-                    new URI("ws://192.168.1.6:8888/client/ws/speech?content-type=audio/x-raw,+layout=(string)interleaved,+rate=(int)16000,+format=(string)S16LE,+channels=(int)1"));
+                    new URI("ws://localhost:8888/client/ws/speech?content-type=audio/x-raw,+layout=(string)interleaved,+rate=(int)16000,+format=(string)S16LE,+channels=(int)1"));
             clientEndPoint.addMessageHandler(new KaldiWebSocketClient.MessageHandler() {
                 public void handleMessage(String message) {
                     JsonObject jsonObject = Json.createReader(new StringReader(message)).readObject();
