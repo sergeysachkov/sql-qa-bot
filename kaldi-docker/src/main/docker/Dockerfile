@@ -47,10 +47,11 @@ RUN git clone https://github.com/kaldi-asr/kaldi && \
     cd /opt/kaldi/src/gst-plugin && make depend && make && \
     cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server && \
     rm -rf /opt/kaldi-gstreamer-server/.git/ && \
-    rm -rf /opt/kaldi-gstreamer-server/test/
+    rm -rf /opt/kaldi-gstreamer-server/sample_worker.yaml
 
 ADD start_kaldi.sh /opt/
 ADD stop_kaldi.sh /opt/
+COPY .provision/sample_worker.yaml /opt/kaldi-gstreamer-server/
 
 RUN chmod +x /opt/start_kaldi.sh && \
     chmod +x /opt/stop_kaldi.sh
