@@ -57,3 +57,5 @@ RUN chmod +x /opt/start_kaldi.sh && \
     chmod +x /opt/stop_kaldi.sh
 
 EXPOSE 8888
+
+CMD /opt/start_kaldi.sh
