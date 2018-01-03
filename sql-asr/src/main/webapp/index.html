@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>SQL A&Q BOT</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 <script type="text/javascript" src="recorder.js"> </script>
 <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
-<div>
+
+<div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'bot')" id="defaultOpen">SQL Bot</button>
+    <button class="tablinks" onclick="openTab(event, 'admin')">Admin</button>
+</div>
+
+<div id="bot" class="tabcontent">
  <audio controls autoplay></audio>
  <input id="start" onclick="startRecording()" type="button" value="ask question" />
  <input id="stop" onclick="stopRecording()" type="button" value="get response" disabled/>
+    <div>
+      <textarea rows="8" cols="80" id="trans" >
+      </textarea>
+    </div>
 </div>
-<textarea rows="8" cols="80" id="trans" >
-</textarea>
+
+<div id="admin" class="tabcontent">
+    <br>
+    <input type="file" name="tokenize"  id="tokenize" />
+    <input type="button" value="tokenize" onclick="uploadFile('tokenize', '/rest/admin/tokenize')" />
+    <br>
+    <input type="file" name="train"  id="train" />
+    <input type="button" value="train" onclick="uploadFile('train', '/rest/admin/train')" />
+</div>
 
 <script>
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -66,6 +84,50 @@
         }, 'audio/x-raw');
         context.close();
     }
+
+    function openTab(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function uploadFile(fileToUpload, urlToUpload) {
+        var data = new FormData(),
+            file = $("#" + fileToUpload)[0].files[0];
+
+        data.append( "name", file.name );
+        data.append( "size", file.size );
+        data.append( "type", file.type );
+        data.append( "file", file );
+
+        $.ajax(
+            { url: urlToUpload,
+                type: "POST",
+                data: data,
+                cache: false,
+                processData: false,
+                contentType: 'multipart/form-data',
+                success: function() { },
+                error: function() { alert('error'); }
+            });
+    }
+
+    document.getElementById("defaultOpen").click();
 </script>
 </body>
 </html>

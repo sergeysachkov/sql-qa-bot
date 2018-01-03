@@ -16,6 +16,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>edu.ait.nlp</groupId>
+            <artifactId>sql-nlp</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.ait.nlp</groupId>
+            <artifactId>sql-search</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-client</artifactId>
             <version>LATEST</version>

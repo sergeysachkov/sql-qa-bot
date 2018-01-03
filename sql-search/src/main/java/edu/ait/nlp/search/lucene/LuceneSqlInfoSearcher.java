@@ -1,5 +1,6 @@
 package edu.ait.nlp.search.lucene;
 
+import edu.ait.nlp.response.SQLResponse;
 import edu.ait.nlp.search.SqlInfoSearcher;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -30,15 +31,18 @@ public class LuceneSqlInfoSearcher implements SqlInfoSearcher{
     }
 
     @Override
-    public List<String> getDocuments(String query) throws IOException, ParseException {
-        List<String> contents = new ArrayList<>();
+    public List<SQLResponse> getDocuments(String query) throws IOException, ParseException {
+        List<SQLResponse> contents = new ArrayList<>();
         QueryParser qp = new QueryParser("content", new StandardAnalyzer());
         Query idQuery = qp.parse(query);
         TopDocs hits = searcher.search(idQuery, 10);
         for (ScoreDoc sd : hits.scoreDocs)
         {
+            SQLResponse response = new SQLResponse();
             Document d = searcher.doc(sd.doc);
-            contents.add(String.format(d.get("content")));
+            response.setScore(sd.score);
+            response.setText(String.format(d.get("content")));
+            contents.add(response);
         }
         return contents;
     }

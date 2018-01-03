@@ -1,36 +1,46 @@
 package edu.ait.nlp.rest;
 
+import edu.ait.nlp.response.SQLResponse;
 import edu.ait.nlp.services.KaldiServiceImpl;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.lucene.queryparser.classic.ParseException;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Path("/sql")
 public class SQLBotResource {
 
-    private KaldiServiceImpl kaldiService = new KaldiServiceImpl();
+    private KaldiServiceImpl kaldiService;
+
+    public SQLBotResource() throws IOException {
+        this.kaldiService = new KaldiServiceImpl();
+    }
+
     @POST
     @Path("/ask")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response uploadFile(InputStream fileInputStream) throws URISyntaxException {
+    public Response uploadFile(InputStream fileInputStream) throws URISyntaxException, IOException, ParseException {
 
         String result = kaldiService.decodeAudio(fileInputStream);
-        return Response.status(200).entity(result).build();
+        List<SQLResponse> results = kaldiService.getSearchResponse(result);
+
+        return Response.status(Response.Status.OK).entity(kaldiService.getBestMatch(results)).build();
 
     }
 
     @GET
     @Path("/ask")
-    public Response uploadFile() {
-        String output = "";
-        return Response.status(200).entity(output).build();
-
+    public Response getResponse(@QueryParam("query") String query) throws IOException, ParseException {
+        if(StringUtils.isEmpty(query)){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        List<SQLResponse> results = kaldiService.getSearchResponse(query);
+        return Response.status(Response.Status.OK).entity(kaldiService.getBestMatch(results)).build();
     }
 
 }

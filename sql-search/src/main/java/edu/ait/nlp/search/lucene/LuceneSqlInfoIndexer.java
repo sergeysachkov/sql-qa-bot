@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 public class LuceneSqlInfoIndexer implements SqlInfoIndexer{
 
     private IndexWriter writer;
-
+    //todo init index on app start if not initialized
     public LuceneSqlInfoIndexer(String indexDirectoryPath) throws IOException {
         FSDirectory dir = FSDirectory.open(Paths.get(indexDirectoryPath));
         IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
         this.writer = new IndexWriter(dir, config);
     }
 
-    public void close() throws CorruptIndexException, IOException {
+    public void close() throws IOException {
         writer.close();
     }
 
