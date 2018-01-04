@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
 @Path("/admin")
@@ -73,8 +74,8 @@ public class SQLBotAdminResource {
     }
 
     private File saveFileToDisk(InputStream fileInputStream) throws IOException {
-        File file = File.createTempFile("train", ",prop");
-        Files.copy(fileInputStream, file.toPath());
+        File file = File.createTempFile("train", ".prop");
+        Files.copy(fileInputStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
         return file;
     }
 
