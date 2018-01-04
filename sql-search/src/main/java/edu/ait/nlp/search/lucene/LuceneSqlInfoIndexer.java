@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class LuceneSqlInfoIndexer implements SqlInfoIndexer{
 
     private IndexWriter writer;
-    //todo init index on app start if not initialized
+
     public LuceneSqlInfoIndexer(String indexDirectoryPath) throws IOException {
         FSDirectory dir = FSDirectory.open(Paths.get(indexDirectoryPath));
         IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
@@ -41,7 +41,9 @@ public class LuceneSqlInfoIndexer implements SqlInfoIndexer{
     @Override
     public void addDocuments(File[] files) throws IOException {
         for(File f : files){
-            addDocument(f);
+            if(f.getName().endsWith(".txt")){
+                addDocument(f);
+            }
         }
     }
 

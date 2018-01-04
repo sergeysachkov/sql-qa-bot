@@ -14,17 +14,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Properties;
 
 @Path("/admin")
 public class SQLBotAdminResource {
 
     private NLPUtils nlpUtils;
-    private SqlInfoIndexer sqlInfoIndexer;
 
     public SQLBotAdminResource() throws IOException {
         nlpUtils = new NLPUtilsImpl();
-        //todo init from props
-        sqlInfoIndexer = new LuceneSqlInfoIndexer("C:\\Users\\root\\projects\\sql-qa-bot\\sql-search\\src\\main\\resources");
+
+
     }
 
     @POST
@@ -60,6 +60,9 @@ public class SQLBotAdminResource {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response addDocument(InputStream fileInputStream) {
         try {
+            Properties props = new Properties();
+            props.load(SQLBotAdminResource.class.getClassLoader().getResourceAsStream("sql-bot.properties"));
+            SqlInfoIndexer sqlInfoIndexer = new LuceneSqlInfoIndexer(props.getProperty("lucene.index.location"));
             File file = saveFileToDisk(fileInputStream);
             sqlInfoIndexer.addDocument(file);
             return Response.status(Response.Status.OK).build();

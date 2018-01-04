@@ -1,4 +1,4 @@
-package edu.ait.nlp.model;
+package edu.ait.nlp.response;
 
 public class KaldiResponse {
     private boolean initialized;

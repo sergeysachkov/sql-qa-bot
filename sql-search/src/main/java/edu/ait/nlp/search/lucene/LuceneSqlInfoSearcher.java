@@ -22,7 +22,7 @@ import java.util.List;
 
 public class LuceneSqlInfoSearcher implements SqlInfoSearcher{
 
-    IndexSearcher searcher;
+    private IndexSearcher searcher;
 
     public LuceneSqlInfoSearcher(String indexDirectoryPath) throws IOException {
         Directory dir = FSDirectory.open(Paths.get(indexDirectoryPath));

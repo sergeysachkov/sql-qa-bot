@@ -3,10 +3,21 @@ package edu.ait.nlp.classifier;
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class SQLClassifierImpl implements SQLClassifier{
+
+    private Properties props;
+
+    public SQLClassifierImpl() throws IOException {
+        this.props = new Properties();
+        props.load(SQLClassifierImpl.class.getClassLoader().getResourceAsStream("nlp.properties"));
+    }
 
     public List<String> getNERFromText(String text, String model){
         if(text == null || text.isEmpty()){
@@ -14,8 +25,7 @@ public class SQLClassifierImpl implements SQLClassifier{
         }
         List<String> result = new ArrayList<>();
         if(model == null || model.isEmpty()){
-            //todo init from props
-            model = "C:\\Users\\root\\projects\\sql-qa-bot\\sql-nlp\\src\\main\\resources\\nlp\\ner-model.ser.gz";
+            model = props.getProperty("nlp.model");
         }
         text = text.replaceAll("[.!?;:]", "");
         AbstractSequenceClassifier classifier = CRFClassifier.getClassifierNoExceptions(model);

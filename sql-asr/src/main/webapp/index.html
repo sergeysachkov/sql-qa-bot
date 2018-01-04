@@ -10,8 +10,9 @@
 <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
 
 <div class="tab">
-    <button class="tablinks" onclick="openTab(event, 'bot')" id="defaultOpen">SQL Bot</button>
+    <button class="tablinks" onclick="openTab(event, 'bot')" id="defaultOpen">Voice Query</button>
     <button class="tablinks" onclick="openTab(event, 'admin')">Admin</button>
+    <button class="tablinks" onclick="openTab(event, 'text')">Text Query</button>
 </div>
 
 <div id="bot" class="tabcontent">
@@ -20,6 +21,15 @@
  <input id="stop" onclick="stopRecording()" type="button" value="get response" disabled/>
     <div>
       <textarea rows="8" cols="80" id="trans" >
+      </textarea>
+    </div>
+</div>
+
+<div id="text" class="tabcontent">
+    <input type="text" name="query"  id="query" />
+    <input id="request" onclick="sendGet()" type="button" value="ask question" />
+    <div>
+    <textarea rows="8" cols="80" id="reply" >
       </textarea>
     </div>
 </div>
@@ -123,6 +133,23 @@
                 processData: false,
                 contentType: 'multipart/form-data',
                 success: function() { },
+                error: function() { alert('error'); }
+            });
+    }
+
+    function sendGet() {
+
+        text = $("#query")[0].value;
+
+        $.ajax(
+            { url: "/rest/sql/ask?query=" + text,
+                type: "GET",
+                data: text,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    $("#reply").val(data);
+                },
                 error: function() { alert('error'); }
             });
     }

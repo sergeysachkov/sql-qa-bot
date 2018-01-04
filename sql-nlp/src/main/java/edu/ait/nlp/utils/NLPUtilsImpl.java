@@ -5,16 +5,24 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Properties;
 
 public class NLPUtilsImpl implements NLPUtils{
 
+    private Properties props;
+
+    public NLPUtilsImpl() throws IOException {
+        this.props = new Properties();
+        props.load(NLPUtilsImpl.class.getClassLoader().getResourceAsStream("nlp.properties"));
+    }
+
     public void trainModel(String propFile) throws Exception {
         if(propFile == null || propFile.isEmpty()){
-            //todo init from props
-            propFile = "C:\\Users\\root\\projects\\sql-qa-bot\\sql-nlp\\src\\main\\resources\\nlp\\train.prop";
+            propFile = props.getProperty("nlp.train.property.file");
         }
         String [] args = new String [2];
         args[0] = "-prop";
@@ -23,23 +31,16 @@ public class NLPUtilsImpl implements NLPUtils{
     }
 
     public void tokenizeModel(String source) throws IOException {
-        //todo init from props
-        String dest  = "nlp/model1.tok";
+        String dest  = props.getProperty("nlp.train.model.file");
         PTBTokenizer<CoreLabel> ptbt = new PTBTokenizer<>(new FileReader(source),
                 new CoreLabelTokenFactory(), "");
         FileWriter f = new FileWriter(dest);
         while (ptbt.hasNext()) {
             CoreLabel label = ptbt.next();
-            //System.out.println(label);
             f.write(label.toString() + "\n");
         }
         f.close();
 
     }
 
-    public static void main(String [] args) throws Exception {
-        //NLPUtils trainer = new NLPUtilsImpl();
-        //trainer.trainModel(null);
-        //trainer.tokenizeModel("C:\\Users\\root\\projects\\sql-qa-bot\\sql-nlp\\src\\main\\resources\\nlp\\model.txt");
-    }
 }

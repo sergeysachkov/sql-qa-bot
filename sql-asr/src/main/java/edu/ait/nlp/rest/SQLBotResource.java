@@ -1,6 +1,7 @@
 package edu.ait.nlp.rest;
 
 import edu.ait.nlp.response.SQLResponse;
+import edu.ait.nlp.search.lucene.LuceneSqlInfoIndexer;
 import edu.ait.nlp.services.KaldiServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Properties;
 
 @Path("/sql")
 public class SQLBotResource {

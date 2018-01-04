@@ -23,6 +23,16 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>InitServlet</servlet-name>
+        <servlet-class>edu.ait.nlp.servlet.InitServlet</servlet-class>
+        <init-param>
+            <param-name>lucene-properties-location</param-name>
+            <param-value>WEB-INF/classes/sql-bot.properties</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>jersey-serlvet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
