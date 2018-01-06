@@ -12,6 +12,7 @@ import javax.json.JsonValue;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -30,7 +31,12 @@ public class KaldiServiceImpl implements AudioRecognitionService {
     public String decodeAudio(InputStream inputStream) {
 
         final KaldiWebSocketClient clientEndPoint;
-        final KaldiResponse response = new KaldiResponse();
+        KaldiResponse response = new KaldiResponse();
+        List<KaldiResponse> responses = new ArrayList<>();
+        boolean useFinal = Boolean.parseBoolean(props.getProperty("use.final", "true"));
+        //array to control finishing of kaldi processing
+        boolean[]finish = new boolean [] {false};
+        int numberOfHypothesis = Integer.parseInt(props.getProperty("max.kaldi.hypothesis", "10"));
         try {
             clientEndPoint = new KaldiWebSocketClient(
                     new URI(props.getProperty("web.socket.address")));
@@ -40,10 +46,17 @@ public class KaldiServiceImpl implements AudioRecognitionService {
                     if (jsonObject.getInt("status") == 0) {
                         JsonObject obj = jsonObject.getJsonObject("result");
                         if (obj != null) {
-                            if (obj.getBoolean("final"))
+                            //if (obj.getBoolean("final"))
                                 for (JsonValue value : obj.getJsonArray("hypotheses")) {
+                                    KaldiResponse response = new KaldiResponse();
                                     response.setResponse(((JsonObject) value).getString("transcript"));
-                                    response.setInitialized(true);
+                                    if (obj.getBoolean("final")){
+                                        finish[0] = true;
+                                        response.setFinalResponse(true);
+                                    }else {
+                                        response.setFinalResponse(false);
+                                    }
+                                    responses.add(response);
                                     System.out.println(((JsonObject) value).getString("transcript"));
                                 }
                         }
@@ -52,15 +65,58 @@ public class KaldiServiceImpl implements AudioRecognitionService {
             });
             clientEndPoint.sendMessage(inputStream);
 
-
-            while (!response.isInitialized()) {
+            int attempts = 0;
+            while (!finish[0]) {
+                System.out.println(finish[0]);
+                attempts++;
+                //sometimes kaldi error occurs and it won't send final hypothesis need extra logig to avoid infinite loop
+                if(numberOfHypothesis < attempts){
+                    break;
+                }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 //wait to get final transcript
             }
 
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
+
+        if(responses.isEmpty()){
+            return " ";
+        }
+        if(useFinal){
+            response = getFinalResponse(responses);
+        }else {
+            response = getLongestResponse(responses);
+        }
         return response.getResponse();
+    }
+
+    private KaldiResponse getLongestResponse(List<KaldiResponse> responses) {
+        KaldiResponse result = new KaldiResponse();
+        for(KaldiResponse response : responses){
+            if(result.getResponse() == null){
+                result = response;
+                continue;
+            }
+            if(result.getResponse().length() < response.getResponse().length()){
+                result = response;
+            }
+        }
+        return result;
+    }
+
+    private KaldiResponse getFinalResponse(List<KaldiResponse> responses) {
+        for(KaldiResponse response : responses){
+            if(response.isFinalResponse()){
+                return response;
+            }
+        }
+        return getLongestResponse(responses);
     }
 
     public List<SQLResponse> getSearchResponse(String query) throws IOException, ParseException {

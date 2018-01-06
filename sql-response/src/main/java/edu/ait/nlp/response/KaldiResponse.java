@@ -1,16 +1,8 @@
 package edu.ait.nlp.response;
 
 public class KaldiResponse {
-    private boolean initialized;
     private String response;
-
-    public boolean isInitialized() {
-        return initialized;
-    }
-
-    public void setInitialized(boolean initialized) {
-        this.initialized = initialized;
-    }
+    private boolean finalResponse;
 
     public String getResponse() {
         return response;
@@ -18,5 +10,13 @@ public class KaldiResponse {
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public boolean isFinalResponse() {
+        return finalResponse;
+    }
+
+    public void setFinalResponse(boolean finalResponse) {
+        this.finalResponse = finalResponse;
     }
 }

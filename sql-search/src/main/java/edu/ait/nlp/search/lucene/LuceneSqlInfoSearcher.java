@@ -8,6 +8,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.flexible.core.util.StringUtils;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -32,6 +33,9 @@ public class LuceneSqlInfoSearcher implements SqlInfoSearcher{
 
     @Override
     public List<SQLResponse> getDocuments(String query) throws IOException, ParseException {
+        if(query == null || " ".equals(query)){
+            return null;
+        }
         List<SQLResponse> contents = new ArrayList<>();
         QueryParser qp = new QueryParser("content", new StandardAnalyzer());
         Query idQuery = qp.parse(query);
