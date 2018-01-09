@@ -36,7 +36,7 @@ public class KaldiServiceImpl implements AudioRecognitionService {
         boolean useFinal = Boolean.parseBoolean(props.getProperty("use.final", "true"));
         //array to control finishing of kaldi processing
         boolean[]finish = new boolean [] {false};
-        int numberOfHypothesis = Integer.parseInt(props.getProperty("max.kaldi.hypothesis", "10"));
+        int numberOfHypothesis = Integer.parseInt(props.getProperty("max.kaldi.waitingloops", "10"));
         try {
             clientEndPoint = new KaldiWebSocketClient(
                     new URI(props.getProperty("web.socket.address")));
