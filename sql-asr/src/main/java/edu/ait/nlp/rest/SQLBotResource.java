@@ -1,5 +1,6 @@
 package edu.ait.nlp.rest;
 
+import edu.ait.nlp.classifier.SQLClassifierImpl;
 import edu.ait.nlp.response.SQLResponse;
 import edu.ait.nlp.search.lucene.LuceneSqlInfoIndexer;
 import edu.ait.nlp.services.KaldiServiceImpl;
@@ -29,7 +30,14 @@ public class SQLBotResource {
     public Response uploadFile(InputStream fileInputStream) throws URISyntaxException, IOException, ParseException {
 
         String result = kaldiService.decodeAudio(fileInputStream);
-        List<SQLResponse> results = kaldiService.getSearchResponse(result);
+         result = result.replace(".", "").toUpperCase();
+        SQLClassifierImpl sqlClassifier = new SQLClassifierImpl();
+        List<String> resList = sqlClassifier.getNERFromText(result, null);
+        StringBuilder res = new StringBuilder("");
+        for(String s : resList){
+            res.append(s).append(" ");
+        }
+        List<SQLResponse> results = kaldiService.getSearchResponse(res.toString());
 
         return Response.status(Response.Status.OK).entity(kaldiService.getBestMatch(results)).build();
 

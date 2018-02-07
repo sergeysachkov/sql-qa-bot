@@ -33,7 +33,7 @@ public class LuceneSqlInfoSearcher implements SqlInfoSearcher{
 
     @Override
     public List<SQLResponse> getDocuments(String query) throws IOException, ParseException {
-        if(query == null || " ".equals(query)){
+        if(query == null || query.isEmpty()){
             return null;
         }
         List<SQLResponse> contents = new ArrayList<>();
