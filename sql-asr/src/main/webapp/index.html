@@ -68,6 +68,7 @@
     function startRecording() {
         document.getElementById('start').disabled = true;
         document.getElementById('stop').disabled = false;
+        document.getElementById('trans').value = '';
         if (navigator.getUserMedia) {
             navigator.getUserMedia({audio: true}, onSuccess, onFail);
         } else {
@@ -143,7 +144,7 @@
     }
 
     function sendGet() {
-
+        document.getElementById('reply').value = '';
         text = $("#query")[0].value;
 
         $.ajax(

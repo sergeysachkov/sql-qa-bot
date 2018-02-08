@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y  --allow-unauthenticated \
                 python-gi \
                 subversion \
                 wget \
+                zip \
                 zlib1g-dev && \
                 apt-get clean autoclean && \
                 apt-get autoremove -y && \
@@ -34,28 +35,29 @@ RUN apt-get update && apt-get install -y  --allow-unauthenticated \
 
 ENV GST_PLUGIN_PATH=/opt/kaldi/src/gst-plugin
 
+ADD .provision/kaldi.tar /opt/
+ADD .provision/kaldi-gstreamer-server.tar /opt/
+ADD .provision/tri3a.tar.gz /opt/
 
 WORKDIR /opt
 
-RUN git clone https://github.com/kaldi-asr/kaldi && \
-    cd /opt/kaldi/tools && \
+RUN cd /opt/kaldi/tools && \
     make && \
     ./install_portaudio.sh && \
     cd /opt/kaldi/src && ./configure --shared && \
-    make depend && make && \
-    cd /opt/kaldi/src/online && make depend && make && \
+    make depend && make && make ext && \
     cd /opt/kaldi/src/gst-plugin && make depend && make && \
-    cd /opt && git clone https://github.com/alumae/kaldi-gstreamer-server && \
-    rm -rf /opt/kaldi-gstreamer-server/.git/ && \
-    rm -rf /opt/kaldi-gstreamer-server/sample_worker.yaml
+    cd /opt && \
+    rm -rf /opt/kaldi-gstreamer-server.zip && \
+    rm -rf /opt/kaldi.zip
 
-ADD /kaldi-docker/src/main/docker/start_kaldi.sh /opt/
-ADD /kaldi-docker/src/main/docker/stop_kaldi.sh /opt/
-COPY /kaldi-docker/src/main/docker/.provision/sample_worker.yaml /opt/kaldi-gstreamer-server/
+COPY start_kaldi.sh /opt/
+COPY stop_kaldi.sh /opt/
+COPY .provision/sample_worker.yaml /opt/kaldi-gstreamer-server/
 
 RUN chmod +x /opt/start_kaldi.sh && \
     chmod +x /opt/stop_kaldi.sh
 
 EXPOSE 8888
 
-CMD /opt/start_kaldi.sh
+CMD ./start_kaldi.sh

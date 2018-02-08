@@ -1,9 +1,9 @@
 timeout-decoder : 10
 decoder:
-   model: /opt/kaldi-gstreamer-server/test/models/english/voxforge/tri2b_mmi_b0.05/final.mdl
-   lda-mat: /opt/kaldi-gstreamer-server/test/models/english/voxforge/tri2b_mmi_b0.05/final.mat
-   word-syms: /opt/kaldi-gstreamer-server/test/models/english/voxforge/tri2b_mmi_b0.05/words.txt
-   fst: /opt/kaldi-gstreamer-server/test/models/english/voxforge/tri2b_mmi_b0.05/HCLG.fst
+   model: /opt/tri3a/final.mdl
+   lda-mat: /opt/tri3a/final.mat
+   word-syms: /opt/tri3a/words.txt
+   fst: /opt/tri3a/HCLG.fst
    silence-phones: "1:2:3:4:5"
 out-dir: tmp
 
