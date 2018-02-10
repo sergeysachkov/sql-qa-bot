@@ -7,7 +7,7 @@
 </head>
 <body>
 <link rel="stylesheet" href="jquery-ui-1.10.4.custom.css">
-<script type="text/javascript" src="recorder.js"> </script>
+<script type="text/javascript" src="recorder.js"></script>
 <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="jquery-ui-1.10.4.custom.js"></script>
 
@@ -18,37 +18,37 @@
 </div>
 
 <div id="bot" class="tabcontent">
- <audio controls autoplay></audio>
- <input id="start" onclick="startRecording()" type="button" value="ask question" />
- <input id="stop" onclick="stopRecording()" type="button" value="get response" disabled/>
+    <audio controls autoplay></audio>
+    <input id="start" onclick="startRecording()" type="button" value="ask question"/>
+    <input id="stop" onclick="stopRecording()" type="button" value="get response" disabled/>
     <div>
-      <textarea rows="8" cols="80" id="trans" >
+      <textarea rows="8" cols="80" id="trans">
       </textarea>
     </div>
 </div>
 
 <div id="text" class="tabcontent">
-    <input type="text" name="query"  id="query" />
-    <input id="request" onclick="sendGet()" type="button" value="ask question" />
+    <input type="text" name="query" id="query"/>
+    <input id="request" onclick="sendGet()" type="button" value="ask question"/>
     <div>
-    <textarea rows="8" cols="80" id="reply" >
+    <textarea rows="8" cols="80" id="reply">
       </textarea>
     </div>
 </div>
 
 <div id="admin" class="tabcontent">
     <br>
-    <input type="file" name="tokenize"  id="tokenize" />
-    <input type="button" value="tokenize" onclick="uploadFile('tokenize', '/rest/admin/tokenize')" />
+    <input type="file" name="tokenize" id="tokenize"/>
+    <input type="button" value="tokenize" onclick="uploadFile('tokenize', '/rest/admin/tokenize')"/>
     <br>
-    <input type="file" name="train"  id="train" />
-    <input type="button" value="train" onclick="uploadFile('train', '/rest/admin/train')" />
+    <input type="file" name="train" id="train"/>
+    <input type="button" value="train" onclick="uploadFile('train', '/rest/admin/train')"/>
     <br>
-    <input type="file" name="index"  id="index" />
-    <input type="button" value="Add Document" onclick="uploadFile('index', '/rest/admin/addDocument')" />
+    <input type="file" name="index" id="index"/>
+    <input type="button" value="Add Document" onclick="uploadFile('index', '/rest/admin/addDocument')"/>
 </div>
 
-<div id="dialog" title="Basic dialog" style="display: none;" ></div>
+<div id="dialog" title="Basic dialog" style="display: none;"></div>
 
 <script>
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -56,16 +56,16 @@
     window.URL = window.URL || window.webkitURL;
     var context = new AudioContext();
     var recorder;
-    var onFail = function(e) {
+    var onFail = function (e) {
         console.log('Rejected!', e);
     };
 
-    var onSuccess = function(s) {
+    var onSuccess = function (s) {
         context = new AudioContext();
         var mediaStreamSource = context.createMediaStreamSource(s);
         window.userSpeechAnalyser = context.createAnalyser();
         mediaStreamSource.connect(window.userSpeechAnalyser);
-        recorder = new Recorder(mediaStreamSource, { workerPath : 'recorderWorker.js' });
+        recorder = new Recorder(mediaStreamSource, {workerPath: 'recorderWorker.js'});
         recorder.record();
     };
 
@@ -79,30 +79,32 @@
             console.log('navigator.getUserMedia not present');
         }
     }
+
     var config = {};
-    config.onEvent = config.onEvent || function(e, data) {};
+    config.onEvent = config.onEvent || function (e, data) {
+    };
 
     function stopRecording() {
         document.getElementById('start').disabled = false;
         document.getElementById('stop').disabled = true;
         recorder.stop();
         config.onEvent(11, 'Stopped recording');
-        recorder.export16kMono(function(blob) {
-                $.ajax({
-                    type: "POST",
-                    url: "/rest/sql/ask",
-                    data: blob,
-                    processData: false,
-                    contentType: 'multipart/form-data'
-                }).done(function( data ) {
-                    recorder.clear();
-                    if (data.found) {
-                        $("#trans").val(data);
-                    }else {
-                        alert("did you mean???");
-                    }
-                    console.log(data);
-                });
+        recorder.export16kMono(function (blob) {
+            $.ajax({
+                type: "POST",
+                url: "/rest/sql/ask",
+                data: blob,
+                processData: false,
+                contentType: 'multipart/form-data'
+            }).done(function (data) {
+                recorder.clear();
+                if (data.found) {
+                    $("#trans").val(data.text);
+                } else {
+                    openDialogue(data, "#trans");
+                }
+                console.log(data);
+            });
         }, 'audio/x-raw');
         context.close();
     }
@@ -132,22 +134,25 @@
         var data = new FormData(),
             file = $("#" + fileToUpload)[0].files[0];
 
-        data.append( "name", file.name );
-        data.append( "size", file.size );
-        data.append( "type", file.type );
-        data.append( "file", file );
+        data.append("name", file.name);
+        data.append("size", file.size);
+        data.append("type", file.type);
+        data.append("file", file);
 
         $.ajax(
-            { url: urlToUpload,
+            {
+                url: urlToUpload,
                 type: "POST",
                 data: data,
                 cache: false,
                 processData: false,
                 contentType: 'multipart/form-data',
-                success: function() {
-                  alert("Done!");
+                success: function () {
+                    alert("Done!");
                 },
-                error: function() { alert('error'); }
+                error: function () {
+                    alert('error');
+                }
             });
     }
 
@@ -156,55 +161,70 @@
         text = $("#query")[0].value;
 
         $.ajax(
-            { url: "/rest/sql/ask?query=" + text,
+            {
+                url: "/rest/sql/ask?query=" + text,
                 type: "GET",
                 data: text,
                 cache: false,
                 processData: false,
-                success: function(data) {
-                if (data.found) {
-                    $("#reply").val(data.text);
-                }else {
-                    $( "#dialog" ).dialog({
-                        width: 500,
-                        height: 300,
-                        open: function(){
-                            var fieldset = '<fieldset><legend>Did you mean? </legend>';
-                            $(fieldset).appendTo('#dialog');
-                           //var fieldset = $(this).find("fieldset");
-                           for(key in data.variants){
-                               var value = data.variants[key];
-                               var block_page = $("<label>" +
-                                   "<input type=\"radio\" name=\"radio\" id=\"radio\"  value= \'" + value + "\' \">" + value + "</label>\n");
-                               $(block_page).appendTo('fieldset');
-                           }
-                           var buttons = '<input id="dialog_req" onclick="sendDialogueGet().val()" type="button" value="ok" />';
-                           var fieldset_end = '</fieldset>';
-                            $(fieldset_end).appendTo('#dialog');
-                           $(buttons).appendTo('#dialog');
-                        }
-                    });
-                }
+                success: function (data) {
+                    if (data.found) {
+                        $("#reply").val(data.text);
+                    } else {
+                        openDialogue(data, "#reply");
+                    }
 
                 },
-                error: function() { alert('error'); }
+                error: function () {
+                    alert('error');
+                }
             });
     }
 
-    function sendDialogueGet() {
+    function openDialogue(data, tab) {
+        $("#dialog").dialog({
+            width: 500,
+            height: 300,
+            open: function () {
+                var fieldset = '<fieldset><legend>Did you mean? </legend>';
+                $(fieldset).appendTo('#dialog');
+                //var fieldset = $(this).find("fieldset");
+                var index = 0;
+                for (key in data.variants) {
+                    var value = data.variants[key];
+                    var block_page = $("<label>" +
+                        "<input type=\"radio\" name=\"radio\" id=\"radio\"  value= \'" + value + "\' \">" + value + "</label>\n");
+                    $(block_page).appendTo('fieldset');
+                    if(index === 0){
+                        $("#radio").attr('checked', 'checked');
+                    }
+                    index = index + 1;
+                }
+                var buttons = '<input id="dialog_req" onclick="sendDialogueGet(\'' + tab + '\').val()" type="button" value="ok" />';
+                var fieldset_end = '</fieldset>';
+                $(fieldset_end).appendTo('#dialog');
+                $(buttons).appendTo('#dialog');
+            }
+        });
+    }
+
+    function sendDialogueGet(tab) {
         var value = $('input[name=radio]:checked').val();
         $.ajax(
-            { url: "/rest/sql/ask?query=" + value,
+            {
+                url: "/rest/sql/ask?query=" + value,
                 type: "GET",
                 data: value,
                 cache: false,
                 processData: false,
-                success: function(data) {
-                  $("#reply").val(data.text);
-                  $('#dialog').dialog('close');
-                  $('#dialog' ).empty();
+                success: function (data) {
+                    $(tab).val(data.text);
+                    $('#dialog').dialog('close');
+                    $('#dialog').empty();
                 },
-                error: function() { alert('error'); }
+                error: function () {
+                    alert('error');
+                }
             });
     }
 
