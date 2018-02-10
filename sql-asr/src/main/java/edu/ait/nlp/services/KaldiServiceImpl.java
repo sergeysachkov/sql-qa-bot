@@ -1,5 +1,6 @@
 package edu.ait.nlp.services;
 
+import edu.ait.nlp.response.FinalQueryResponse;
 import edu.ait.nlp.response.KaldiResponse;
 import edu.ait.nlp.response.SQLResponse;
 import edu.ait.nlp.search.SqlInfoSearcher;
@@ -123,12 +124,15 @@ public class KaldiServiceImpl implements AudioRecognitionService {
         return sqlInfoSearcher.getDocuments(query);
     }
 
-    public String getBestMatch(List<SQLResponse> responses){
+    public FinalQueryResponse getBestMatch(List<SQLResponse> responses){
+        FinalQueryResponse response = new FinalQueryResponse();
         if(responses == null || responses.isEmpty()){
-            return "Sorry, don't understand!";
+            return response;
         }
         if(responses.size() == 1){
-            return responses.get(0).getText();
+            response.setText(responses.get(0).getText());
+            response.setFound(true);
+            return response;
         }
         SQLResponse bestResponse = new SQLResponse();
         for(SQLResponse r : responses){
@@ -136,6 +140,8 @@ public class KaldiServiceImpl implements AudioRecognitionService {
                 bestResponse = r;
             }
         }
-        return bestResponse.getText();
+        response.setText(bestResponse.getText());
+        response.setFound(true);
+        return response;
     }
 }

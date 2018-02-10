@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+<link rel="stylesheet" href="jquery-ui-1.10.4.custom.css">
 <script type="text/javascript" src="recorder.js"> </script>
 <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.10.4.custom.js"></script>
 
 <div class="tab">
     <button class="tablinks" onclick="openTab(event, 'bot')" id="defaultOpen">Voice Query</button>
@@ -45,6 +47,8 @@
     <input type="file" name="index"  id="index" />
     <input type="button" value="Add Document" onclick="uploadFile('index', '/rest/admin/addDocument')" />
 </div>
+
+<div id="dialog" title="Basic dialog" style="display: none;" ></div>
 
 <script>
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -92,7 +96,11 @@
                     contentType: 'multipart/form-data'
                 }).done(function( data ) {
                     recorder.clear();
-                    $("#trans").val(data);
+                    if (data.found) {
+                        $("#trans").val(data);
+                    }else {
+                        alert("did you mean???");
+                    }
                     console.log(data);
                 });
         }, 'audio/x-raw');
@@ -154,7 +162,47 @@
                 cache: false,
                 processData: false,
                 success: function(data) {
-                    $("#reply").val(data);
+                if (data.found) {
+                    $("#reply").val(data.text);
+                }else {
+                    $( "#dialog" ).dialog({
+                        width: 500,
+                        height: 300,
+                        open: function(){
+                            var fieldset = '<fieldset><legend>Did you mean? </legend>';
+                            $(fieldset).appendTo('#dialog');
+                           //var fieldset = $(this).find("fieldset");
+                           for(key in data.variants){
+                               var value = data.variants[key];
+                               var block_page = $("<label>" +
+                                   "<input type=\"radio\" name=\"radio\" id=\"radio\"  value= \'" + value + "\' \">" + value + "</label>\n");
+                               $(block_page).appendTo('fieldset');
+                           }
+                           var buttons = '<input id="dialog_req" onclick="sendDialogueGet().val()" type="button" value="ok" />';
+                           var fieldset_end = '</fieldset>';
+                            $(fieldset_end).appendTo('#dialog');
+                           $(buttons).appendTo('#dialog');
+                        }
+                    });
+                }
+
+                },
+                error: function() { alert('error'); }
+            });
+    }
+
+    function sendDialogueGet() {
+        var value = $('input[name=radio]:checked').val();
+        $.ajax(
+            { url: "/rest/sql/ask?query=" + value,
+                type: "GET",
+                data: value,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                  $("#reply").val(data.text);
+                  $('#dialog').dialog('close');
+                  $('#dialog' ).empty();
                 },
                 error: function() { alert('error'); }
             });
