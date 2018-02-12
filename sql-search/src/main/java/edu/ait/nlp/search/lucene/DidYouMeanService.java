@@ -19,8 +19,8 @@ public class DidYouMeanService {
 
     public DidYouMeanService() throws IOException {
         props = new Properties();
-        //props.load(DidYouMeanService.class.getClassLoader().getResourceAsStream("sql-bot.properties"));
-        props.load(new FileReader("C:\\Users\\root\\projects\\sql-qa-bot\\sql-asr\\src\\main\\resources\\sql-bot.properties"));
+        props.load(DidYouMeanService.class.getClassLoader().getResourceAsStream("sql-bot.properties"));
+        //props.load(new FileReader("C:\\Users\\root\\projects\\sql-qa-bot\\sql-asr\\src\\main\\resources\\sql-bot.properties"));
 
         location  = props.getProperty("lucene.vocabulary.location") + "/dictionary.txt";
         File vocabularyDir = new File(props.getProperty("lucene.vocabulary.location"));
