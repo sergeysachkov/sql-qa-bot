@@ -192,7 +192,7 @@
                 var index = 0;
                 for (key in data.variants) {
                     var value = data.variants[key];
-                    var block_page = $("<label>" +
+                    var block_page = $("<br /> <label>" +
                         "<input type=\"radio\" name=\"radio\" id=\"radio\"  value= \'" + value + "\' \">" + value + "</label>\n");
                     $(block_page).appendTo('fieldset');
                     if(index === 0){

@@ -55,6 +55,10 @@ public class SQLBotResource {
 
         SQLClassifierImpl sqlClassifier = new SQLClassifierImpl();
         List<String> resList = sqlClassifier.getNERFromText(query.toUpperCase(), null);
+        //todo remove this logic after model update, need uppercase in the model only
+        if(resList == null || resList.isEmpty()){
+            resList = sqlClassifier.getNERFromText(query, null);
+        }
         StringBuilder res = new StringBuilder("");
         for(String s : resList){
             res.append(s).append(" ");

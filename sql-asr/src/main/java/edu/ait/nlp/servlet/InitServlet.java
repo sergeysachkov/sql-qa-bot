@@ -27,6 +27,7 @@ public class InitServlet extends HttpServlet {
             String luceneProp = webAppPath + luceneLocation;
             File lucene = new File(luceneProp);
             FileWriter fileWriter = null;
+            FileWriter didYouMeanFileWriter = null;
             if (lucene.exists()) {
 
                 SqlInfoIndexer sqlInfoIndexer;
@@ -48,17 +49,25 @@ public class InitServlet extends HttpServlet {
                     sqlInfoIndexer.close();
                     vocabularyLocation.mkdir();
                     fileWriter = new FileWriter(vocabularyLocation + "/dictionary.txt");
+                    didYouMeanFileWriter = new FileWriter(vocabularyLocation + "/didyoumeandefault.txt");
                     Set<String> vocabularySet = new HashSet<>();
+                    Set<String> didYouMeanSet = new HashSet<>();
                     for(File f : indexLocation.listFiles()){
                         String fileName = f.getName();
                         if(fileName.endsWith(".txt")){
                             fileName = fileName.replace(".txt", "").replace("-", " ");
                             vocabularySet.addAll(Arrays.asList(fileName.split(" ")));
+                            didYouMeanSet.add(fileName);
                         }
                     }
                     for(String voc : vocabularySet){
                         fileWriter.write(voc);
                         fileWriter.write("\n");
+                    }
+
+                    for(String voc : didYouMeanSet){
+                        didYouMeanFileWriter.write(voc);
+                        didYouMeanFileWriter.write("\n");
                     }
 
                 } catch (IOException e) {
@@ -67,6 +76,13 @@ public class InitServlet extends HttpServlet {
                     if(fileWriter != null){
                         try {
                             fileWriter.close();
+                        } catch (IOException e) {
+                            throw new RuntimeException("failed to close FileWriter!");
+                        }
+                    }
+                    if(didYouMeanFileWriter!= null){
+                        try {
+                            didYouMeanFileWriter.close();
                         } catch (IOException e) {
                             throw new RuntimeException("failed to close FileWriter!");
                         }
