@@ -19,11 +19,13 @@ import java.util.Properties;
 
 @Path("/sql")
 public class SQLBotResource {
-
+    private Properties props;
     private KaldiServiceImpl kaldiService;
     private DidYouMeanService service;
 
     public SQLBotResource() throws IOException {
+        props = new Properties();
+        props.load(SQLBotResource.class.getClassLoader().getResourceAsStream("sql-bot.properties"));
         this.kaldiService = new KaldiServiceImpl();
         this.service = new DidYouMeanService();
     }
@@ -53,17 +55,24 @@ public class SQLBotResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        SQLClassifierImpl sqlClassifier = new SQLClassifierImpl();
-        List<String> resList = sqlClassifier.getNERFromText(query.toUpperCase(), null);
-        //todo remove this logic after model update, need uppercase in the model only
-        if(resList == null || resList.isEmpty()){
-            resList = sqlClassifier.getNERFromText(query, null);
+        List<SQLResponse> results = null;
+        if(Boolean.parseBoolean(props.getProperty("standford.nlp.on", "true"))) {
+            SQLClassifierImpl sqlClassifier = new SQLClassifierImpl();
+            List<String> resList = sqlClassifier.getNERFromText(query.toUpperCase(), null);
+            //todo remove this logic after model update, need uppercase in the model only
+            if (resList == null || resList.isEmpty()) {
+                resList = sqlClassifier.getNERFromText(query, null);
+            }
+
+            StringBuilder res = new StringBuilder("");
+            for (String s : resList) {
+                res.append(s).append(" ");
+            }
+            results = kaldiService.getSearchResponse(res.toString());
+        }else {
+            results = kaldiService.getSearchResponse(query);
         }
-        StringBuilder res = new StringBuilder("");
-        for(String s : resList){
-            res.append(s).append(" ");
-        }
-        List<SQLResponse> results = kaldiService.getSearchResponse(res.toString());
+
         FinalQueryResponse response = new FinalQueryResponse();
         if(results == null || results.isEmpty()){
             response.setFound(false);
