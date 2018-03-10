@@ -1,9 +1,9 @@
 # location of the training file
-trainFile = C:\\Users\\root\\projects\\sql-qa-bot\\sql-nlp\\src\\test\\resources\\nlp\\model_test.tok
+trainFile = src\\test\\resources\\nlp\\model_test.tok
 # location where you would like to save (serialize) your
 # classifier; adding .gz at the end automatically gzips the file,
 # making it smaller, and faster to load
-serializeTo = C:\\Users\\root\\projects\\sql-qa-bot\\sql-nlp\\src\\test\\resources\\nlp\\ner-model.ser.gz
+serializeTo = src\\test\\resources\\nlp\\ner-model.ser.gz
 map = word=0,answer=1
 
 useClassFeature=true
