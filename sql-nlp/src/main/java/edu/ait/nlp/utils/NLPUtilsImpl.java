@@ -40,7 +40,6 @@ public class NLPUtilsImpl implements NLPUtils{
             f.write(label.toString() + "\n");
         }
         f.close();
-
     }
 
 }
