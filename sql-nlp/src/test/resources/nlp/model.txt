@@ -19,7 +19,7 @@ host
 The host name of the server. Defaults to localhost. To specify an IPv6 address your must enclose the host parameter with square brackets, for example:
 jdbc:postgresql://[::1]:5740/accounting
 port
-The port number the server is listening on. Defaults to the PostgreSQL™ standard port number (5432).
+The port number the server is listening on. Defaults to the PostgreSQL standard port number (5432).
 database
 The database name. The default is to connect to a database with the same name as the user name.
 to delete record from table use following expression DELETE FROM weather WHERE city = 'Hayward';

@@ -13,14 +13,16 @@ public class NLPUtilsImplTest {
 
     @Test
     public void tokenizeModelTest() throws IOException {
-        String source = "C:\\Users\\root\\projects\\sql-qa-bot\\sql-nlp\\src\\test\\resources\\nlp\\model.txt";
+        String source = "target/resources/nlp/model.txt";
         NLPUtils nlpUtils = new NLPUtilsImpl();
         nlpUtils.tokenizeModel(source);
-        String testSource = "C:\\Users\\root\\projects\\sql-qa-bot\\sql-nlp\\src\\test\\resources\\nlp\\model_orig.tok";
+        String testSource = "target/resources/nlp/model_orig.tok";
         Properties props = new Properties();
         props.load(NLPUtilsImpl.class.getClassLoader().getResourceAsStream("nlp.properties"));
         File file1 = new File(props.getProperty("nlp.train.model.file"));
+        assertTrue(file1.exists());
         File file2 = new File(testSource);
+        assertTrue(file2.exists());
         assertTrue(FileUtils.contentEquals(file1, file2));
         assertTrue(file1.delete());
     }
