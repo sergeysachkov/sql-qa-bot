@@ -1,0 +1,3 @@
+delete record
+select record 
+update record
