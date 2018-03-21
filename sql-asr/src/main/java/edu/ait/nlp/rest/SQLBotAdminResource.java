@@ -4,6 +4,8 @@ import edu.ait.nlp.search.SqlInfoIndexer;
 import edu.ait.nlp.search.lucene.LuceneSqlInfoIndexer;
 import edu.ait.nlp.utils.NLPUtils;
 import edu.ait.nlp.utils.NLPUtilsImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -21,6 +23,7 @@ import java.util.Properties;
 public class SQLBotAdminResource {
 
     private NLPUtils nlpUtils;
+    private static final Logger logger = LoggerFactory.getLogger(SQLBotAdminResource.class);
 
     public SQLBotAdminResource() throws IOException {
         nlpUtils = new NLPUtilsImpl();
@@ -37,7 +40,7 @@ public class SQLBotAdminResource {
             nlpUtils.trainModel(file.getAbsolutePath());
             return Response.status(Response.Status.OK).build();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error occurred during NER model training!", e);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
@@ -51,7 +54,7 @@ public class SQLBotAdminResource {
             nlpUtils.tokenizeModel(file.getAbsolutePath());
             return Response.status(Response.Status.OK).build();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error occurred during model tokenizing!", e);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
@@ -68,7 +71,7 @@ public class SQLBotAdminResource {
             sqlInfoIndexer.addDocument(file);
             return Response.status(Response.Status.OK).build();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error occurred during adding document to index!", e);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }

@@ -6,6 +6,8 @@ import edu.ait.nlp.response.SQLResponse;
 import edu.ait.nlp.search.SqlInfoSearcher;
 import edu.ait.nlp.search.lucene.LuceneSqlInfoSearcher;
 import org.apache.lucene.queryparser.classic.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -18,6 +20,8 @@ import java.util.List;
 import java.util.Properties;
 
 public class KaldiServiceImpl implements AudioRecognitionService {
+
+    private static final Logger logger = LoggerFactory.getLogger(KaldiServiceImpl.class);
 
     private SqlInfoSearcher sqlInfoSearcher;
     private Properties props;
@@ -58,7 +62,7 @@ public class KaldiServiceImpl implements AudioRecognitionService {
                                         response.setFinalResponse(false);
                                     }
                                     responses.add(response);
-                                    System.out.println(((JsonObject) value).getString("transcript"));
+                                    logger.debug(((JsonObject) value).getString("transcript"));
                                 }
                         }
                     }
@@ -68,7 +72,7 @@ public class KaldiServiceImpl implements AudioRecognitionService {
 
             int attempts = 0;
             while (!finish[0]) {
-                System.out.println(finish[0]);
+                logger.debug("Do I need to stop {}", finish[0]);
                 attempts++;
                 //sometimes kaldi error occurs and it won't send final hypothesis need extra logig to avoid infinite loop
                 if(numberOfHypothesis < attempts){
