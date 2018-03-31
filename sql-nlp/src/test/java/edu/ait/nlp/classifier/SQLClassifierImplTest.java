@@ -32,7 +32,7 @@ public class SQLClassifierImplTest {
             List<String> control = new ArrayList<>();
             control.add("CREATE");
             control.add("TABLE");
-            List<String> results = classifier.getNERFromText("CREATE TABLE", "target/classes/nlp/ner-model.ser.gz");
+            List<String> results = classifier.getNERFromText("CREATE TABLE", "target/resources/nlp/ner-model.ser.gz");
             assertEquals(results, control);
         }catch (IOException e){
             fail();
