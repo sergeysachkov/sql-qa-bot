@@ -84,6 +84,10 @@
     config.onEvent = config.onEvent || function (e, data) {
     };
 
+    function errorMessage(){
+      alert("Error occurred!")
+    }
+
     function stopRecording() {
         document.getElementById('start').disabled = false;
         document.getElementById('stop').disabled = true;
@@ -95,7 +99,8 @@
                 url: "/rest/sql/ask",
                 data: blob,
                 processData: false,
-                contentType: 'multipart/form-data'
+                contentType: 'multipart/form-data',
+                error: errorMessage
             }).done(function (data) {
                 recorder.clear();
                 if (data.found) {
@@ -176,7 +181,7 @@
 
                 },
                 error: function () {
-                    alert('error');
+                    alert('Error Occurred!');
                 }
             });
     }
@@ -223,7 +228,7 @@
                     $('#dialog').empty();
                 },
                 error: function () {
-                    alert('error');
+                    alert('Error Occurred!');
                 }
             });
     }
