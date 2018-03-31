@@ -36,7 +36,7 @@ public class SQLBotResource {
     @Path("/ask")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response uploadFile(InputStream fileInputStream){
+    public Response processAudioQuery(InputStream fileInputStream){
         try {
             String result = kaldiService.decodeAudio(fileInputStream);
             result = result.replace(".", "").toUpperCase();
@@ -44,7 +44,7 @@ public class SQLBotResource {
                 //avoid bad arg exception from getResponse(result) call
                 result = "none";
             }
-            return getResponse(result);
+            return processTextQuery(result);
         } catch (Exception e) {
             logger.error("Error occurred during decoding audio query!", e);
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -56,7 +56,7 @@ public class SQLBotResource {
     @GET
     @Path("/ask")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getResponse(@QueryParam("query") String query) throws IOException, ParseException {
+    public Response processTextQuery(@QueryParam("query") String query) throws IOException, ParseException {
         if(StringUtils.isEmpty(query)){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
