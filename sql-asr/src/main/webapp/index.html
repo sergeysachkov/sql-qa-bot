@@ -25,6 +25,10 @@
       <textarea rows="8" cols="80" id="trans">
       </textarea>
     </div>
+    <!--<br>
+    <input type="file" name="audio-file" id="audio-file"/>
+    <input type="button" value="audio-file" onclick="uploadAudioFile('audio-file', '/rest/sql/ask')"/>
+    <br>-->
 </div>
 
 <div id="text" class="tabcontent">
@@ -93,7 +97,7 @@
         document.getElementById('stop').disabled = true;
         recorder.stop();
         config.onEvent(11, 'Stopped recording');
-        recorder.export16kMono(function (blob) {
+        recorder.exportMonoWAV(function (blob) {
             $.ajax({
                 type: "POST",
                 url: "/rest/sql/ask",
@@ -137,7 +141,7 @@
 
     function uploadFile(fileToUpload, urlToUpload) {
         var data = new FormData(),
-            file = $("#" + fileToUpload)[0].files[0];
+        file = $("#" + fileToUpload)[0].files[0];
 
         data.append("name", file.name);
         data.append("size", file.size);
@@ -154,6 +158,30 @@
                 contentType: 'multipart/form-data',
                 success: function () {
                     alert("Done!");
+                },
+                error: function () {
+                    alert('error');
+                }
+            });
+    }
+
+    function uploadAudioFile(fileToUpload, urlToUpload) {
+        var file = $("#" + fileToUpload)[0].files[0];
+
+        $.ajax(
+            {
+                url: urlToUpload,
+                type: "POST",
+                data: file,
+                cache: false,
+                processData: false,
+                contentType: 'multipart/form-data',
+                success: function (data) {
+                    if (data.found) {
+                        $("#trans").val(data.text);
+                    } else {
+                        openDialogue(data, "#trans");
+                    }
                 },
                 error: function () {
                     alert('error');
