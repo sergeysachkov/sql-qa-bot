@@ -1,0 +1,17 @@
+alex_delete_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:19
+alex_select_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:3244
+alex_select_record1 /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:7354
+alex_update_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:11463
+alex_update_record1 /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:15573
+anna_delete_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:19682
+anna_delete_record1 /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:22908
+anna_select_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:26133
+anna_select_record1 /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:30464
+anna_update_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:34794
+anna_update_record1 /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:38904
+serhiy_delete_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:43015
+serhiy_delete_record1 /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:46126
+serhiy_select_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:49236
+serhiy_select_record1 /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:52906
+serhiy_update_record /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:56575
+serhiy_update_record1 /home/esersac/Projects/kaldi/egs/sql/mfcc/raw_mfcc_train.1.ark:59686

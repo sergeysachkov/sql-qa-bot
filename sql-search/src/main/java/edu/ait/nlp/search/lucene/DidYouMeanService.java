@@ -7,7 +7,6 @@ import org.apache.lucene.search.spell.SpellChecker;
 import org.apache.lucene.store.*;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;

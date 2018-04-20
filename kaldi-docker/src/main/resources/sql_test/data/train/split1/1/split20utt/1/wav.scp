@@ -1,0 +1,3 @@
+al_delete_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/al/alex_delete.wav
+al_delete_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/al/alex_delete1.wav
+al_select_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/al/alex_select.wav

@@ -1,0 +1,3 @@
+ser_delete_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ser/serhiy_delete.wav
+ser_delete_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ser/serhiy_delete1.wav
+ser_select_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ser/serhiy_select.wav

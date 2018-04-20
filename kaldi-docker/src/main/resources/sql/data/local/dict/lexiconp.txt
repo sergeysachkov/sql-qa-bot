@@ -1,8 +1,0 @@
-!SIL 1.0	SIL
-<UNK> 1.0	SPN
-delete 1.0	d eh l ih t
-record 1.0	r eh k o r d
-record 1.0	r eh k o d
-select 1.0	s eh l eh c t
-update 1.0	ah p d ey t
-update 1.0	ah p d ei t

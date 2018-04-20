@@ -27,6 +27,7 @@ public class LuceneSqlInfoIndexer implements SqlInfoIndexer{
     }
 
     public void close() throws IOException {
+        writer.flush();
         writer.close();
     }
 

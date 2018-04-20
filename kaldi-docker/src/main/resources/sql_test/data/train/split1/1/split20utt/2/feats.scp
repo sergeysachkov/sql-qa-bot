@@ -1,0 +1,3 @@
+al_select_record1 /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_train.1.ark:10572
+al_update_record /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_train.1.ark:14458
+al_update_record1 /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_train.1.ark:18566

@@ -1,0 +1,3 @@
+ani_delete_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ani/anna_delete.wav
+ani_delete_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ani/anna_delete1.wav
+ani_select_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ani/anna_select.wav

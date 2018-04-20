@@ -1,0 +1,3 @@
+ser_select_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ser/serhiy_select1.wav
+ser_update_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ser/serhiy_update.wav
+ser_update_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/ser/serhiy_update1.wav

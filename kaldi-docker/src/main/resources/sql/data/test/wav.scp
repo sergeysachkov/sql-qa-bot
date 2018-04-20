@@ -1,6 +1,0 @@
-serhiy1_delete_record /home/esersac/Projects/kaldi/egs/sql/sql_audio/test/serhiy1/delete_record.wav
-serhiy1_delete_record1 /home/esersac/Projects/kaldi/egs/sql/sql_audio/test/serhiy1/delete_record1.wav
-serhiy1_select_record /home/esersac/Projects/kaldi/egs/sql/sql_audio/test/serhiy1/select_record.wav
-serhiy1_select_record1 /home/esersac/Projects/kaldi/egs/sql/sql_audio/test/serhiy1/select_record1.wav
-serhiy1_update_record /home/esersac/Projects/kaldi/egs/sql/sql_audio/test/serhiy1/update_record.wav
-serhiy1_update_record1 /home/esersac/Projects/kaldi/egs/sql/sql_audio/test/serhiy1/update_record1.wav

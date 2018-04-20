@@ -69,6 +69,7 @@ public class SQLBotAdminResource {
             SqlInfoIndexer sqlInfoIndexer = new LuceneSqlInfoIndexer(props.getProperty("lucene.index.location"));
             File file = saveFileToDisk(fileInputStream);
             sqlInfoIndexer.addDocument(file);
+            sqlInfoIndexer.close();
             return Response.status(Response.Status.OK).build();
         } catch (Exception e) {
             logger.error("Error occurred during adding document to index!", e);

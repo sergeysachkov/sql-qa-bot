@@ -1,0 +1,3 @@
+an_select_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/an/anna_select1.wav
+an_update_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/an/anna_update.wav
+an_update_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/an/anna_update1.wav

@@ -1,0 +1,9 @@
+al /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:3
+alex /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:247
+ali /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:490
+an /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:732
+ani /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:975
+anna /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:1219
+ser /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:1462
+serg /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:1706
+serhiy /home/esersac/Projects/kaldi/egs/sql_test/mfcc/cmvn_train.ark:1952

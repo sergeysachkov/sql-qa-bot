@@ -37,7 +37,7 @@ public class NLPUtilsImpl implements NLPUtils{
         FileWriter f = new FileWriter(dest);
         while (ptbt.hasNext()) {
             CoreLabel label = ptbt.next();
-            f.write(label.toString() + "\n");
+            f.write(label.toString().toUpperCase() + "\n");
         }
         f.close();
     }

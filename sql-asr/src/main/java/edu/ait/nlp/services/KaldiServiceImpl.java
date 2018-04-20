@@ -62,7 +62,8 @@ public class KaldiServiceImpl implements AudioRecognitionService {
                                         response.setFinalResponse(false);
                                     }
                                     responses.add(response);
-                                    logger.debug(((JsonObject) value).getString("transcript"));
+                                    logger.debug("Value is {} and it is final: {}",
+                                            ((JsonObject) value).getString("transcript"), response.isFinalResponse());
                                 }
                         }
                     }
@@ -91,7 +92,7 @@ public class KaldiServiceImpl implements AudioRecognitionService {
         }
 
         if(responses.isEmpty()){
-            return " ";
+            return "";
         }
         if(useFinal){
             response = getFinalResponse(responses);

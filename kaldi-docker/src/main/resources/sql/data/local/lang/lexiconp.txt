@@ -1,8 +1,0 @@
-!SIL 1.0 SIL_S
-<UNK> 1.0 SPN_S
-delete 1.0 d_B eh_I l_I ih_I t_E
-record 1.0 r_B eh_I k_I o_I r_I d_E
-record 1.0 r_B eh_I k_I o_I d_E
-select 1.0 s_B eh_I l_I eh_I c_I t_E
-update 1.0 ah_B p_I d_I ey_I t_E
-update 1.0 ah_B p_I d_I ei_I t_E

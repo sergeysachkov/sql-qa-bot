@@ -1,0 +1,12 @@
+al1_delete_record /home/anna/kaldi/egs/sql_test/sql_audio/test/al1/alex_delete.wav
+al1_delete_record1 /home/anna/kaldi/egs/sql_test/sql_audio/test/al1/alex_delete1.wav
+al1_select_record /home/anna/kaldi/egs/sql_test/sql_audio/test/al1/alex_select.wav
+al1_select_record1 /home/anna/kaldi/egs/sql_test/sql_audio/test/al1/alex_select1.wav
+al1_update_record /home/anna/kaldi/egs/sql_test/sql_audio/test/al1/alex_update.wav
+al1_update_record1 /home/anna/kaldi/egs/sql_test/sql_audio/test/al1/alex_update1.wav
+serhiy1_delete_record /home/anna/kaldi/egs/sql_test/sql_audio/test/serhiy1/delete_record.wav
+serhiy1_delete_record1 /home/anna/kaldi/egs/sql_test/sql_audio/test/serhiy1/delete_record1.wav
+serhiy1_select_record /home/anna/kaldi/egs/sql_test/sql_audio/test/serhiy1/select_record.wav
+serhiy1_select_record1 /home/anna/kaldi/egs/sql_test/sql_audio/test/serhiy1/select_record1.wav
+serhiy1_update_record /home/anna/kaldi/egs/sql_test/sql_audio/test/serhiy1/update_record.wav
+serhiy1_update_record1 /home/anna/kaldi/egs/sql_test/sql_audio/test/serhiy1/update_record1.wav

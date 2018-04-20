@@ -1,0 +1,3 @@
+al_select_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/al/alex_select1.wav
+al_update_record /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/al/alex_update.wav
+al_update_record1 /home/esersac/Projects/kaldi/egs/sql_test/sql_audio/train/al/alex_update1.wav

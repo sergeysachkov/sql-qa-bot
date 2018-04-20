@@ -1,0 +1,13 @@
+
+\data\
+ngram 1=6
+
+\1-grams:
+-0.544068	</s>
+-99	<s>
+-0.8450981	DELETE
+-0.544068	RECORD
+-0.8450981	SELECT
+-0.8450981	UPDATE
+
+\end\

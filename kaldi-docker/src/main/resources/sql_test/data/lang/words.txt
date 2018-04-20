@@ -1,0 +1,10 @@
+<eps> 0
+!SIL 1
+<UNK> 2
+DELETE 3
+RECORD 4
+SELECT 5
+UPDATE 6
+#0 7
+<s> 8
+</s> 9

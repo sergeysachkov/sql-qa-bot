@@ -1,0 +1,12 @@
+al1_delete_record /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:18
+al1_delete_record1 /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:3243
+al1_select_record /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:6467
+al1_select_record1 /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:10576
+al1_update_record /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:14463
+al1_update_record1 /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:18572
+serhiy1_delete_record /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:22684
+serhiy1_delete_record1 /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:25107
+serhiy1_select_record /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:27945
+serhiy1_select_record1 /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:30732
+serhiy1_update_record /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:33310
+serhiy1_update_record1 /home/esersac/Projects/kaldi/egs/sql_test/mfcc/raw_mfcc_test.1.ark:36136
